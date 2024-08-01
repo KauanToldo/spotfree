@@ -26,5 +26,9 @@ flutter:
 
   assets:
    - assets/logo.png
+   - assets/usuario.png
+   - assets/rap.jpg
+   - assets/sertanejo.png
+   - assets/luan_santana.png
   # fonts:
   
