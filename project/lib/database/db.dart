@@ -8,6 +8,10 @@ Future<Database> getDatabase() async {
     caminhoBanco,
     version: 1,
     onCreate: (db, version) {
+      db.execute('CREATE TABLE usuarios('
+          'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+          'nome TEXT, '
+          'senha TEXT)');
       db.execute('CREATE TABLE music('
           'id INTEGER PRIMARY KEY AUTOINCREMENT, '
           'nome TEXT, '

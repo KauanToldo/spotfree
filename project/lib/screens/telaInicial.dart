@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:project/database/db_query.dart';
+import 'package:project/database/dao/db_query.dart';
 import 'package:project/model/music.dart';
 import 'package:project/model/playlist.dart';
+import 'package:project/screens/telaPerfil.dart';
 
 class TelaInicial extends StatefulWidget {
   String nomeusuario;
@@ -24,34 +25,40 @@ class _TelaInicialState extends State<TelaInicial> {
             padding: const EdgeInsets.all(25.0),
             child: ListView(
               children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      "assets/usuario.png",
-                      scale: 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.nomeusuario,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                          Text(
-                            "Ver perfil",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 182, 182, 182),
-                                fontSize: 12),
-                          )
-                        ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TelaPerfil()));
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "assets/usuario.png",
+                        scale: 8,
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.nomeusuario,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                            Text(
+                              "Ver perfil",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 182, 182, 182),
+                                  fontSize: 12),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(height: 50.0),
                 ListTile(
@@ -93,7 +100,7 @@ class _TelaInicialState extends State<TelaInicial> {
             Expanded(
               child: FutureBuilder(
                 initialData: const [],
-                future: findall(),
+                future: findallplaylist(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
@@ -118,26 +125,33 @@ class _TelaInicialState extends State<TelaInicial> {
                               dados[index]['capa'] as Uint8List?;
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 16.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 46, 42, 42),
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Row(
-                                children: [
-                                  Image.memory(
-                                    capaBytes!,
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0),
-                                    child: Text(
-                                      dados[index]['nome'],
-                                      style: TextStyle(color: Colors.white),
+                            child: GestureDetector(
+                              onTap: () {
+                                debugPrint(
+                                    "Entrar na playlist ${dados[index]['nome']}");
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 46, 42, 42),
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: Row(
+                                  children: [
+                                    Image.memory(
+                                      capaBytes!,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 20.0),
+                                      child: Text(
+                                        dados[index]['nome'],
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
