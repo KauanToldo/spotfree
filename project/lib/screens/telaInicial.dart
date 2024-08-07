@@ -1,14 +1,15 @@
+// ignore_for_file: file_names
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:project/database/dao/db_query.dart';
-import 'package:project/model/music.dart';
-import 'package:project/model/playlist.dart';
+// import 'package:project/model/music.dart';
+// import 'package:project/model/playlist.dart';
 import 'package:project/screens/telaPerfil.dart';
 
 class TelaInicial extends StatefulWidget {
-  String nomeusuario;
-  TelaInicial({required this.nomeusuario, super.key});
+  const TelaInicial({super.key});
 
   @override
   State<TelaInicial> createState() => _TelaInicialState();
@@ -18,7 +19,7 @@ class _TelaInicialState extends State<TelaInicial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 18, 18, 18),
+      backgroundColor: const Color.fromARGB(255, 18, 18, 18),
       drawer: Drawer(
           backgroundColor: const Color.fromARGB(255, 36, 36, 36),
           child: Padding(
@@ -27,8 +28,10 @@ class _TelaInicialState extends State<TelaInicial> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TelaPerfil()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TelaPerfil()));
                   },
                   child: Row(
                     children: [
@@ -36,14 +39,14 @@ class _TelaInicialState extends State<TelaInicial> {
                         "assets/usuario.png",
                         scale: 8,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.nomeusuario,
-                              style: const TextStyle(
+                              "Nome",
+                              style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
@@ -60,13 +63,13 @@ class _TelaInicialState extends State<TelaInicial> {
                     ],
                   ),
                 ),
-                SizedBox(height: 50.0),
+                const SizedBox(height: 50.0),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     "Sair",
                     style: TextStyle(color: Colors.white),
                   ),
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.logout,
                     color: Colors.white,
                   ),
@@ -79,24 +82,24 @@ class _TelaInicialState extends State<TelaInicial> {
             ),
           )),
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        backgroundColor: Color.fromARGB(255, 18, 18, 18),
+        backgroundColor: const Color.fromARGB(255, 18, 18, 18),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Suas Playlists",
               style: TextStyle(
                   color: Color.fromARGB(255, 30, 215, 16),
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Expanded(
               child: FutureBuilder(
                 initialData: const [],
@@ -132,7 +135,8 @@ class _TelaInicialState extends State<TelaInicial> {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 46, 42, 42),
+                                    color:
+                                        const Color.fromARGB(255, 46, 42, 42),
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   children: [
@@ -147,7 +151,8 @@ class _TelaInicialState extends State<TelaInicial> {
                                           const EdgeInsets.only(left: 20.0),
                                       child: Text(
                                         dados[index]['nome'],
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ],
@@ -164,7 +169,7 @@ class _TelaInicialState extends State<TelaInicial> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: const BottomAppBar(
         color: Color.fromARGB(255, 18, 18, 18),
         child: Center(
           child: Column(

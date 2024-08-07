@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:project/model/usuario.dart';
+// import 'package:project/model/usuario.dart';
 import 'package:project/screens/telaLogin.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:project/database/dao/db_query.dart';
-import 'package:project/model/music.dart';
+// import 'package:project/model/music.dart';
 import 'package:project/model/playlist.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -26,13 +26,15 @@ void main() async {
   ByteData luanSantanaFile = await rootBundle.load('assets/luan_santana.png');
   Uint8List luanSantanaCapa = luanSantanaFile.buffer.asUint8List();
 
-  // insertPlaylist(Playlist(nome: "Esquenta Sertanejo", capa: sertanejoCapa));
-  // insertPlaylist(Playlist(nome: "Rap", capa: rapCapa));
-  // insertPlaylist(Playlist(nome: "Luan Santana", capa: luanSantanaCapa));
+  insertPlaylist(Playlist(nome: "Esquenta Sertanejo", capa: sertanejoCapa));
+  insertPlaylist(Playlist(nome: "Rap", capa: rapCapa));
+  insertPlaylist(Playlist(nome: "Luan Santana", capa: luanSantanaCapa));
 
-  insertUsuario(Usuario(nome: "kauan", senha: "123"));
-
-  debugPrint(findallusuario().toString());
+  debugPrint(findallusuario().then(
+    (value) {
+      debugPrint(value.toString());
+    },
+  ).toString());
 
   debugPrint(findallplaymusic().then(
     (value) {

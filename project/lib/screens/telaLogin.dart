@@ -1,6 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:project/database/dao/db_query.dart';
-import 'package:project/model/usuario.dart';
+// import 'package:project/database/dao/db_query.dart';
+// import 'package:project/model/usuario.dart';
 import 'package:project/screens/telaInicial.dart';
 
 class LoginPage extends StatefulWidget {
@@ -47,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 100),
+                    const SizedBox(height: 100),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -115,12 +117,14 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TelaInicial(
-                                          nomeusuario:
-                                              _controllerUsuario.text)));
+                              if (_controllerUsuario.text == "Kauan Toldo" &&
+                                  _controllerSenha.text == "123") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TelaInicial()));
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
@@ -141,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 125),
+                    const SizedBox(height: 125),
                     const Column(
                       children: [
                         Text(

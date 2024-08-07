@@ -1,11 +1,13 @@
+// ignore_for_file: file_names, unnecessary_import
+
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project/database/dao/db_query.dart';
-import 'package:project/model/music.dart';
-import 'package:project/model/playlist.dart';
+// import 'package:project/model/music.dart';
+// import 'package:project/model/playlist.dart';
 
 class TelaPerfil extends StatefulWidget {
   const TelaPerfil({super.key});
@@ -18,7 +20,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 18, 18, 18),
+      backgroundColor: const Color.fromARGB(255, 18, 18, 18),
       body: Padding(
         padding: const EdgeInsets.all(50.0),
         child: Column(
@@ -30,11 +32,11 @@ class _TelaPerfilState extends State<TelaPerfil> {
                   "assets/usuario.png",
                   scale: 5,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
                   child: Text(
                     "Nome da pessoa",
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
@@ -42,8 +44,8 @@ class _TelaPerfilState extends State<TelaPerfil> {
                 )
               ],
             ),
-            SizedBox(height: 40.0),
-            Text(
+            const SizedBox(height: 40.0),
+            const Text(
               "Playlists de Fulano de Tal",
               style: TextStyle(
                   color: Color.fromARGB(255, 30, 215, 16),
@@ -85,7 +87,8 @@ class _TelaPerfilState extends State<TelaPerfil> {
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 46, 42, 42),
+                                    color:
+                                        const Color.fromARGB(255, 46, 42, 42),
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   children: [
@@ -100,7 +103,8 @@ class _TelaPerfilState extends State<TelaPerfil> {
                                           const EdgeInsets.only(left: 20.0),
                                       child: Text(
                                         dados[index]['nome'],
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ],
@@ -118,13 +122,13 @@ class _TelaPerfilState extends State<TelaPerfil> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 18, 18, 18),
+        color: const Color.fromARGB(255, 18, 18, 18),
         child: Center(
           child: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
-            child: Column(
+            child: const Column(
               children: [
                 Icon(
                   Icons.library_music,
