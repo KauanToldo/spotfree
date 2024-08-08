@@ -30,18 +30,6 @@ void main() async {
   insertPlaylist(Playlist(nome: "Rap", capa: rapCapa));
   insertPlaylist(Playlist(nome: "Luan Santana", capa: luanSantanaCapa));
 
-  debugPrint(findallusuario().then(
-    (value) {
-      debugPrint(value.toString());
-    },
-  ).toString());
-
-  debugPrint(findallplaymusic().then(
-    (value) {
-      debugPrint(value.toString());
-    },
-  ).toString());
-
   runApp(const MaterialApp(
     home: LoginPage(),
     debugShowCheckedModeBanner: false,

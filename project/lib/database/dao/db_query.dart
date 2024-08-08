@@ -34,6 +34,13 @@ Future<List<Map<String, dynamic>>> findallplaymusic() async {
   return dados;
 }
 
+Future<List<Map<String, dynamic>>> findidmusics(id) async {
+  Database db = await getDatabase();
+  List<Map<String, dynamic>> dados =
+      await db.query('playlist_music', where: 'playlist_id = $id');
+  return dados;
+}
+
 Future<List<Map<String, dynamic>>> findallmusic() async {
   Database db = await getDatabase();
   List<Map<String, dynamic>> dados = await db.query('music');

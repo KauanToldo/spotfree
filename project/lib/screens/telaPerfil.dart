@@ -122,7 +122,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: const Color.fromARGB(255, 18, 18, 18),
+        color: const Color.fromARGB(255, 14, 14, 14),
         child: Center(
           child: GestureDetector(
             onTap: () {

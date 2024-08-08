@@ -7,6 +7,7 @@ import 'package:project/database/dao/db_query.dart';
 // import 'package:project/model/music.dart';
 // import 'package:project/model/playlist.dart';
 import 'package:project/screens/telaPerfil.dart';
+import 'package:project/screens/telaPlaylist.dart';
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -130,8 +131,16 @@ class _TelaInicialState extends State<TelaInicial> {
                             padding: const EdgeInsets.only(bottom: 16.0),
                             child: GestureDetector(
                               onTap: () {
-                                debugPrint(
-                                    "Entrar na playlist ${dados[index]['nome']}");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => TelaPlaylist(
+                                              namePlaylist: dados[index]
+                                                  ['nome'],
+                                              capaPlaylist: dados[index]
+                                                  ['capa'],
+                                              idPlaylist: dados[index]['id'],
+                                            ))));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -170,7 +179,7 @@ class _TelaInicialState extends State<TelaInicial> {
         ),
       ),
       bottomNavigationBar: const BottomAppBar(
-        color: Color.fromARGB(255, 18, 18, 18),
+        color: Color.fromARGB(255, 14, 14, 14),
         child: Center(
           child: Column(
             children: [
