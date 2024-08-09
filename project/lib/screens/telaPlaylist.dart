@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:project/database/dao/db_query.dart';
+import 'package:project/screens/telaMusica.dart';
 
 class TelaPlaylist extends StatefulWidget {
   final String namePlaylist;
@@ -94,38 +95,53 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                           itemBuilder: (context, index) {
                             Uint8List? capaBytes =
                                 dados[index]['capa'] as Uint8List?;
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-                              child: Row(
-                                children: [
-                                  Image.memory(
-                                    capaBytes!,
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          dados[index]['nome'],
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(dados[index]['autor'],
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            )),
-                                      ],
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => TelaMusica(
+                                            nameMusic: dados[index]['nome'],
+                                            autorMusic: dados[index]['autor'],
+                                            capaMusic: dados[index]['capa'],
+                                            namePlaylist:
+                                                widget.namePlaylist))));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                                child: Row(
+                                  children: [
+                                    Image.memory(
+                                      capaBytes!,
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.cover,
                                     ),
-                                  )
-                                ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            dados[index]['nome'],
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(dados[index]['autor'],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                              )),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },

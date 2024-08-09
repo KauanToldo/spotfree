@@ -17,6 +17,7 @@ dependencies:
   path:
   sqflite:
   sqflite_common_ffi: ^2.2.5
+  audioplayers: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -39,5 +40,6 @@ flutter:
    - assets/vidaloka.jpeg
    - assets/leal.jpeg
    - assets/bomlugar.jpeg
+   - assets/anjoscantam.mp3
   # fonts:
   
