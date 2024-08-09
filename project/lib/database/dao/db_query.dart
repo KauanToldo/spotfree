@@ -22,6 +22,16 @@ Future<int> insertUsuario(Usuario usuario) async {
       conflictAlgorithm: ConflictAlgorithm.replace);
 }
 
+Future<int> insertPlayMusic(int id_playlist, int id_music) async {
+  Database db = await getDatabase();
+  Map<String, dynamic> values = {
+    'playlist_id': id_playlist,
+    'music_id': id_music,
+  };
+  return db.insert('playlist_music', values,
+      conflictAlgorithm: ConflictAlgorithm.replace);
+}
+
 Future<List<Map<String, dynamic>>> findallplaylist() async {
   Database db = await getDatabase();
   List<Map<String, dynamic>> dados = await db.query('playlist');
@@ -34,11 +44,15 @@ Future<List<Map<String, dynamic>>> findallplaymusic() async {
   return dados;
 }
 
-Future<List<Map<String, dynamic>>> findidmusics(id) async {
+Future<List<Map<String, dynamic>>> getMusicsByPlaylist(int playlistId) async {
   Database db = await getDatabase();
-  List<Map<String, dynamic>> dados =
-      await db.query('playlist_music', where: 'playlist_id = $id');
-  return dados;
+
+  return await db.rawQuery('''
+    SELECT music.* 
+    FROM playlist_music
+    INNER JOIN music ON playlist_music.music_id = music.id
+    WHERE playlist_music.playlist_id = ?
+  ''', [playlistId]);
 }
 
 Future<List<Map<String, dynamic>>> findallmusic() async {

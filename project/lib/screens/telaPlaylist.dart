@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:project/database/dao/db_query.dart';
 
 class TelaPlaylist extends StatefulWidget {
   final String namePlaylist;
@@ -55,6 +56,7 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                         fontSize: 18),
                   ),
                   IconButton.filled(
+                    iconSize: 40,
                     onPressed: () {},
                     icon: const Icon(Icons.play_arrow),
                     color: Colors.white,
@@ -64,7 +66,74 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                     ),
                   ),
                 ],
-              )
+              ),
+              SizedBox(height: 32),
+              Expanded(
+                child: FutureBuilder(
+                  initialData: const [],
+                  future: getMusicsByPlaylist(widget.idPlaylist),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        return const Center(
+                          child: Text(
+                              "Houve um erro de conexão com o banco de dados"),
+                        );
+                      case ConnectionState.active:
+                      case ConnectionState.waiting:
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.black,
+                            semanticsLabel: "Carregando...",
+                          ),
+                        );
+                      case ConnectionState.done:
+                        List<Map> dados = snapshot.data as List<Map>;
+                        return ListView.builder(
+                          itemCount: dados.length,
+                          itemBuilder: (context, index) {
+                            Uint8List? capaBytes =
+                                dados[index]['capa'] as Uint8List?;
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+                              child: Row(
+                                children: [
+                                  Image.memory(
+                                    capaBytes!,
+                                    width: 60,
+                                    height: 60,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          dados[index]['nome'],
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(dados[index]['autor'],
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),

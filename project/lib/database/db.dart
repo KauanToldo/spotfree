@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 Future<Database> getDatabase() async {
-  String caminhoBanco = join(await getDatabasesPath(), 'spotfree2.db');
+  String caminhoBanco = join(await getDatabasesPath(), 'banco2.db');
 
   return openDatabase(
     caminhoBanco,
@@ -15,7 +15,9 @@ Future<Database> getDatabase() async {
       db.execute('CREATE TABLE music('
           'id INTEGER PRIMARY KEY AUTOINCREMENT, '
           'nome TEXT, '
-          'autor TEXT)');
+          'autor TEXT, '
+          'capa MEDIUMBLOB, '
+          'nomearquivo TEXT)');
       db.execute('CREATE TABLE playlist('
           'id INTEGER PRIMARY KEY AUTOINCREMENT, '
           'nome TEXT, '
