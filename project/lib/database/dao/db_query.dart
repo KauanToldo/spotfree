@@ -67,6 +67,20 @@ Future<List<Map<String, dynamic>>> findallusuario() async {
   return dados;
 }
 
+Future<List<Map<String, dynamic>>> checkUserExistByEmail(String email) async {
+  Database db = await getDatabase();
+  List<Map<String, dynamic>> dados =
+      await db.query('usuarios', where: 'email = ?', whereArgs: [email]);
+  return dados;
+}
+
+Future<List<Map<String, dynamic>>> checkUserExistByName(String nome) async {
+  Database db = await getDatabase();
+  List<Map<String, dynamic>> dados =
+      await db.query('usuarios', where: 'nome = ?', whereArgs: [nome]);
+  return dados;
+}
+
 Future<int> deleteplaylist() async {
   Database db = await getDatabase();
   return db.delete('playlist', where: 'id >= 1');

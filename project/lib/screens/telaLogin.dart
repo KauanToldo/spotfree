@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:project/database/dao/db_query.dart';
+import 'package:project/screens/telaCadastro.dart';
 // import 'package:project/database/dao/db_query.dart';
 // import 'package:project/model/usuario.dart';
 import 'package:project/screens/telaInicial.dart';
@@ -16,6 +18,15 @@ class _LoginPageState extends State<LoginPage> {
   bool _lembrarDeMim = false;
   final TextEditingController _controllerSenha = TextEditingController();
   final TextEditingController _controllerUsuario = TextEditingController();
+
+  void checkLogin() async {
+    // Verifica campos vazios
+    if (_controllerUsuario.text == "" || _controllerSenha.text == "") {
+      return;
+    }
+
+    // Verifica concordancia dos dados
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,14 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_controllerUsuario.text == "Kauan Toldo" &&
-                                  _controllerSenha.text == "123") {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const TelaInicial()));
-                              }
+                              checkLogin();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
@@ -143,6 +147,37 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Não tem uma conta?',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const TelaCadastro()));
+                                },
+                                child: Text(
+                                  'Cadastre-se',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 30, 215, 96),
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor:
+                                          Color.fromARGB(255, 30, 215, 96)),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                     const SizedBox(height: 125),

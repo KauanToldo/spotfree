@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 Future<Database> getDatabase() async {
-  String caminhoBanco = join(await getDatabasesPath(), 'banco2.db');
+  String caminhoBanco = join(await getDatabasesPath(), 'banco5.db');
 
   return openDatabase(
     caminhoBanco,
@@ -10,6 +10,7 @@ Future<Database> getDatabase() async {
     onCreate: (db, version) {
       db.execute('CREATE TABLE usuarios('
           'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+          'email TEXT, '
           'nome TEXT, '
           'senha TEXT)');
       db.execute('CREATE TABLE music('
@@ -17,7 +18,8 @@ Future<Database> getDatabase() async {
           'nome TEXT, '
           'autor TEXT, '
           'capa MEDIUMBLOB, '
-          'nomearquivo TEXT)');
+          'nomearquivo TEXT, '
+          'tamanho INTEGER)');
       db.execute('CREATE TABLE playlist('
           'id INTEGER PRIMARY KEY AUTOINCREMENT, '
           'nome TEXT, '
