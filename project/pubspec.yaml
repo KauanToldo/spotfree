@@ -40,6 +40,11 @@ flutter:
    - assets/vidaloka.jpeg
    - assets/leal.jpeg
    - assets/bomlugar.jpeg
-   - assets/anjoscantam.mp3
+   - assets/musics/anjoscantam.mp3
+   - assets/musics/seuastral.mp3
+   - assets/musics/assumibrasil.mp3
+   - assets/musics/vidaloka.mp3
+   - assets/musics/leal.mp3
+   - assets/musics/bomlugar.mp3
   # fonts:
   

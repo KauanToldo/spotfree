@@ -10,13 +10,15 @@ class TelaMusica extends StatefulWidget {
   final String autorMusic;
   final Uint8List capaMusic;
   final String namePlaylist;
+  final String nomearquivo;
 
   const TelaMusica(
       {super.key,
       required this.nameMusic,
       required this.autorMusic,
       required this.capaMusic,
-      required this.namePlaylist});
+      required this.namePlaylist,
+      required this.nomearquivo});
 
   @override
   State<TelaMusica> createState() => _TelaMusicaState();
@@ -25,6 +27,8 @@ class TelaMusica extends StatefulWidget {
 class _TelaMusicaState extends State<TelaMusica> {
   double _currentSliderValue = 0;
   late AudioPlayer audioPlayer;
+
+  IconData buttonPlayPause = Icons.play_arrow;
 
   @override
   void initState() {
@@ -38,7 +42,7 @@ class _TelaMusicaState extends State<TelaMusica> {
     super.dispose();
   }
 
-  Future<void> playLocal(String path) async {
+  Future<void> playMusic(String path) async {
     audioPlayer.play(AssetSource(path));
   }
 
@@ -85,8 +89,8 @@ class _TelaMusicaState extends State<TelaMusica> {
                     _currentSliderValue = value;
                   });
                 }),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -101,7 +105,7 @@ class _TelaMusicaState extends State<TelaMusica> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       Icons.skip_previous,
@@ -110,18 +114,28 @@ class _TelaMusicaState extends State<TelaMusica> {
                     )),
                 IconButton.filled(
                     onPressed: () {
-                      playLocal('anjoscantam.mp3');
+                      if (buttonPlayPause == Icons.play_arrow) {
+                        setState(() {
+                          buttonPlayPause = Icons.pause;
+                          playMusic('musics/${widget.nomearquivo}');
+                        });
+                      } else {
+                        setState(() {
+                          buttonPlayPause = Icons.play_arrow;
+                          audioPlayer.pause();
+                        });
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.white,
                     )),
                     icon: Icon(
-                      Icons.play_arrow,
+                      buttonPlayPause,
                       color: Colors.black,
                       size: 50,
                     )),
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       Icons.skip_next,

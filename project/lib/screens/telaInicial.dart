@@ -185,14 +185,14 @@ class _TelaInicialState extends State<TelaInicial> {
             children: [
               Icon(
                 Icons.library_music,
-                color: Color.fromARGB(255, 182, 182, 182),
+                color: Color.fromARGB(255, 255, 255, 255),
                 size: 35,
               ),
               SizedBox(height: 4),
               Text(
                 "Sua Biblioteca",
                 style: TextStyle(
-                    color: Color.fromARGB(255, 182, 182, 182), fontSize: 12),
+                    color: Color.fromARGB(255, 255, 255, 255), fontSize: 12),
               )
             ],
           ),

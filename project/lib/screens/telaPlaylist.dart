@@ -101,11 +101,13 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => TelaMusica(
-                                            nameMusic: dados[index]['nome'],
-                                            autorMusic: dados[index]['autor'],
-                                            capaMusic: dados[index]['capa'],
-                                            namePlaylist:
-                                                widget.namePlaylist))));
+                                              nameMusic: dados[index]['nome'],
+                                              autorMusic: dados[index]['autor'],
+                                              capaMusic: dados[index]['capa'],
+                                              namePlaylist: widget.namePlaylist,
+                                              nomearquivo: dados[index]
+                                                  ['nomearquivo'],
+                                            ))));
                               },
                               child: Padding(
                                 padding:
