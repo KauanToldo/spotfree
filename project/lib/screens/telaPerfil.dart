@@ -6,11 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project/database/dao/db_query.dart';
+import 'package:project/screens/telaPlaylist.dart';
 // import 'package:project/model/music.dart';
 // import 'package:project/model/playlist.dart';
 
 class TelaPerfil extends StatefulWidget {
-  const TelaPerfil({super.key});
+  final String nameUser;
+
+  const TelaPerfil({super.key, required this.nameUser});
 
   @override
   State<TelaPerfil> createState() => _TelaPerfilState();
@@ -32,11 +35,11 @@ class _TelaPerfilState extends State<TelaPerfil> {
                   "assets/usuario.png",
                   scale: 5,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    "Nome da pessoa",
-                    style: TextStyle(
+                    widget.nameUser,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
@@ -80,8 +83,14 @@ class _TelaPerfilState extends State<TelaPerfil> {
                               dados[index]['capa'] as Uint8List?;
                           return GestureDetector(
                             onTap: () {
-                              debugPrint(
-                                  "Entrar na playlist ${dados[index]['nome']}");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => TelaPlaylist(
+                                            namePlaylist: dados[index]['nome'],
+                                            capaPlaylist: dados[index]['capa'],
+                                            idPlaylist: dados[index]['id'],
+                                          ))));
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),

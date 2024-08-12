@@ -18,15 +18,43 @@ class _TelaCadastroState extends State<TelaCadastro> {
   final TextEditingController _controllerUsuario = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
 
-  void checkCadastro() {
+  void checkCadastro() async {
     // Verificar campos vazios
     if (_controllerEmail.text == "" ||
         _controllerUsuario.text == "" ||
         _controllerSenha.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Todos os campos precisam ser preenchidos!"),
+        showCloseIcon: true,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      ));
       return;
     }
 
     // Verificar usuário já existente
+    if (await checkUserExistByEmail(_controllerEmail.text)) {
+      insertUsuario(Usuario(
+          nome: _controllerUsuario.text,
+          senha: _controllerSenha.text,
+          email: _controllerEmail.text));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TelaInicial(
+                    nameUser: _controllerUsuario.text,
+                  )));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Já existe um usuário com este email cadastrado!"),
+        showCloseIcon: true,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      ));
+      return;
+    }
   }
 
   @override
@@ -152,11 +180,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Já tem uma conta?',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -170,7 +198,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                           builder: (context) =>
                                               const LoginPage()));
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Login',
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 30, 215, 96),

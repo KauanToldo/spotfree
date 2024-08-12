@@ -10,7 +10,9 @@ import 'package:project/screens/telaPerfil.dart';
 import 'package:project/screens/telaPlaylist.dart';
 
 class TelaInicial extends StatefulWidget {
-  const TelaInicial({super.key});
+  final String nameUser;
+
+  const TelaInicial({super.key, required this.nameUser});
 
   @override
   State<TelaInicial> createState() => _TelaInicialState();
@@ -32,7 +34,9 @@ class _TelaInicialState extends State<TelaInicial> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TelaPerfil()));
+                            builder: (context) => TelaPerfil(
+                                  nameUser: widget.nameUser,
+                                )));
                   },
                   child: Row(
                     children: [
@@ -40,19 +44,19 @@ class _TelaInicialState extends State<TelaInicial> {
                         "assets/usuario.png",
                         scale: 8,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Nome",
-                              style: TextStyle(
+                              widget.nameUser,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
                             ),
-                            Text(
+                            const Text(
                               "Ver perfil",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 182, 182, 182),

@@ -67,11 +67,11 @@ Future<List<Map<String, dynamic>>> findallusuario() async {
   return dados;
 }
 
-Future<List<Map<String, dynamic>>> checkUserExistByEmail(String email) async {
+Future<bool> checkUserExistByEmail(String email) async {
   Database db = await getDatabase();
   List<Map<String, dynamic>> dados =
       await db.query('usuarios', where: 'email = ?', whereArgs: [email]);
-  return dados;
+  return dados.isEmpty;
 }
 
 Future<List<Map<String, dynamic>>> checkUserExistByName(String nome) async {
@@ -79,6 +79,20 @@ Future<List<Map<String, dynamic>>> checkUserExistByName(String nome) async {
   List<Map<String, dynamic>> dados =
       await db.query('usuarios', where: 'nome = ?', whereArgs: [nome]);
   return dados;
+}
+
+Future<bool> isPasswordCorrect(String nome, String senha) async {
+  List<Map<String, dynamic>> userData = await checkUserExistByName(nome);
+
+  if (userData.isNotEmpty) {
+    String storedPassword = userData.first['senha'];
+
+    if (storedPassword == senha) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 Future<int> deleteplaylist() async {

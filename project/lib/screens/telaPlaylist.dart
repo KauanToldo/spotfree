@@ -68,7 +68,7 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Expanded(
                 child: FutureBuilder(
                   initialData: const [],
@@ -130,13 +130,13 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                                         children: [
                                           Text(
                                             dados[index]['nome'],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(dados[index]['autor'],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12,
                                               )),

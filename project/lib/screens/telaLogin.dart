@@ -22,6 +22,32 @@ class _LoginPageState extends State<LoginPage> {
   void checkLogin() async {
     // Verifica campos vazios
     if (_controllerUsuario.text == "" || _controllerSenha.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Todos os campos precisam ser preenchidos!"),
+        showCloseIcon: true,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      ));
+      return;
+    }
+
+    if (await isPasswordCorrect(
+        _controllerUsuario.text, _controllerSenha.text)) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TelaInicial(
+                    nameUser: _controllerUsuario.text,
+                  )));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Senha e/ou usuário incorretos!"),
+        showCloseIcon: true,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      ));
       return;
     }
 
@@ -147,11 +173,11 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Não tem uma conta?',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -165,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                                           builder: (context) =>
                                               const TelaCadastro()));
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Cadastre-se',
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 30, 215, 96),

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 // ignore: depend_on_referenced_packages
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -50,7 +49,7 @@ class _TelaMusicaState extends State<TelaMusica> {
   }
 
   Future<void> contagemMusic() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       _currentSliderValue++;
     });
@@ -70,10 +69,10 @@ class _TelaMusicaState extends State<TelaMusica> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 18, 18, 18),
+        backgroundColor: const Color.fromARGB(255, 18, 18, 18),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 18, 18, 18),
-          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: const Color.fromARGB(255, 18, 18, 18),
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: Expanded(
             child: Column(
@@ -81,25 +80,26 @@ class _TelaMusicaState extends State<TelaMusica> {
           children: [
             Text(
               widget.namePlaylist,
-              style: TextStyle(color: Colors.white, fontSize: 24),
+              style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
-            SizedBox(height: 40.0),
+            const SizedBox(height: 40.0),
             Image.memory(
               widget.capaMusic,
               width: 350,
               height: 350,
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 50.0),
+            const SizedBox(height: 50.0),
             Text(
               textAlign: TextAlign.start,
               widget.nameMusic,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold),
             ),
-            Text(widget.autorMusic, style: TextStyle(color: Colors.white)),
+            Text(widget.autorMusic,
+                style: const TextStyle(color: Colors.white)),
             Slider(
                 value: _currentSliderValue,
                 max: 100,
@@ -111,16 +111,16 @@ class _TelaMusicaState extends State<TelaMusica> {
                   });
                 }),
             Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     '0:00',
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(secondsToMinutes(),
-                      style: TextStyle(color: Colors.white))
+                      style: const TextStyle(color: Colors.white))
                 ],
               ),
             ),
