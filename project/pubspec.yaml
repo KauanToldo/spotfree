@@ -29,22 +29,7 @@ flutter:
   uses-material-design: true
 
   assets:
-   - assets/logo.png
-   - assets/usuario.png
-   - assets/rap.jpg
-   - assets/sertanejo.png
-   - assets/luan_santana.png
-   - assets/seuastral.jpeg
-   - assets/anjoscantam.jpeg
-   - assets/assumibrasil.jpeg
-   - assets/vidaloka.jpeg
-   - assets/leal.jpeg
-   - assets/bomlugar.jpeg
-   - assets/musics/anjoscantam.mp3
-   - assets/musics/seuastral.mp3
-   - assets/musics/assumibrasil.mp3
-   - assets/musics/vidaloka.mp3
-   - assets/musics/leal.mp3
-   - assets/musics/bomlugar.mp3
+   - assets/
+   - assets/musics/
   # fonts:
   

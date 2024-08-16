@@ -48,9 +48,9 @@ class _TelaPerfilState extends State<TelaPerfil> {
               ],
             ),
             const SizedBox(height: 40.0),
-            const Text(
-              "Playlists de Fulano de Tal",
-              style: TextStyle(
+            Text(
+              'Playlists de ${widget.nameUser}',
+              style: const TextStyle(
                   color: Color.fromARGB(255, 30, 215, 16),
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
@@ -131,7 +131,9 @@ class _TelaPerfilState extends State<TelaPerfil> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: const Color.fromARGB(255, 14, 14, 14),
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        color: const Color.fromARGB(255, 18, 18, 18),
         child: Center(
           child: GestureDetector(
             onTap: () {

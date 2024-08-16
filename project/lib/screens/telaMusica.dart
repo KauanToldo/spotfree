@@ -28,13 +28,11 @@ class TelaMusica extends StatefulWidget {
 
 class _TelaMusicaState extends State<TelaMusica> {
   double _currentSliderValue = 0;
-
   late AudioPlayer audioPlayer;
-
   IconData buttonPlayPause = Icons.play_arrow;
-
-  late int tempoTotal = widget.tamanho;
-  Timer? timer;
+  late double tempoTotal = double.parse(widget.tamanho.toString());
+  Timer? _timer;
+  bool isPlaying = false;
 
   @override
   void initState() {
@@ -48,16 +46,29 @@ class _TelaMusicaState extends State<TelaMusica> {
     super.dispose();
   }
 
-  Future<void> contagemMusic() async {
-    await Future.delayed(const Duration(seconds: 1));
+  void _togglePlayPause() {
     setState(() {
-      _currentSliderValue++;
+      isPlaying = !isPlaying;
+
+      if (isPlaying) {
+        // Inicia ou retoma o timer quando o botão de play é pressionado
+        _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+          setState(() {
+            // Incrementa o valor do slider
+            _currentSliderValue = (_currentSliderValue < tempoTotal)
+                ? _currentSliderValue + 1
+                : tempoTotal;
+            // Para o timer se o slider atingir o valor máximo
+            if (_currentSliderValue == tempoTotal) {
+              _timer?.cancel();
+            }
+          });
+        });
+      } else {
+        // Pausa o timer quando o botão de pause é pressionado
+        _timer?.cancel();
+      }
     });
-    if (_currentSliderValue == tempoTotal) {
-      return;
-    } else {
-      contagemMusic();
-    }
   }
 
   String secondsToMinutes() {
@@ -101,22 +112,21 @@ class _TelaMusicaState extends State<TelaMusica> {
             Text(widget.autorMusic,
                 style: const TextStyle(color: Colors.white)),
             Slider(
-                value: _currentSliderValue,
-                max: 100,
-                activeColor: Colors.grey[800],
-                divisions: tempoTotal,
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
-                }),
+              value: _currentSliderValue,
+              divisions: widget.tamanho,
+              max: tempoTotal,
+              onChanged: (value) {},
+              activeColor:
+                  Color.fromARGB(255, 45, 207, 13), // Cor ativa do slider
+              inactiveColor: Colors.grey, // Cor inativa do slider
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    '0:00',
+                  Text(
+                    _currentSliderValue.toString(),
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(secondsToMinutes(),
@@ -136,6 +146,7 @@ class _TelaMusicaState extends State<TelaMusica> {
                     )),
                 IconButton.filled(
                     onPressed: () {
+                      _togglePlayPause();
                       if (buttonPlayPause == Icons.play_arrow) {
                         setState(() {
                           buttonPlayPause = Icons.pause;

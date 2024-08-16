@@ -183,7 +183,8 @@ class _TelaInicialState extends State<TelaInicial> {
         ),
       ),
       bottomNavigationBar: const BottomAppBar(
-        color: Color.fromARGB(255, 14, 14, 14),
+        surfaceTintColor: Colors.transparent,
+        color: Color.fromARGB(255, 18, 18, 18),
         child: Center(
           child: Column(
             children: [
