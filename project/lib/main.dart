@@ -1,13 +1,13 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
-import 'package:project/model/music.dart';
-import 'package:project/screens/telaCadastro.dart';
 import 'package:project/screens/telaSplash.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:project/database/dao/db_query.dart';
-import 'package:project/model/playlist.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/material.dart';
+// import 'dart:typed_data';
+// import 'package:project/model/music.dart';
+// import 'package:project/screens/telaCadastro.dart';
+// import 'package:project/database/dao/db_query.dart';
+// import 'package:project/model/playlist.dart';
+// import 'package:flutter/services.dart' show rootBundle;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -70,7 +70,7 @@ class _TelaMusicaState extends State<TelaMusica> {
 
       if (isPlaying) {
         // Inicia ou retoma o timer quando o botão de play é pressionado
-        _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
           setState(() {
             // Incrementa o valor do slider
             if (_currentSliderValue < tempoTotal) {
@@ -81,7 +81,7 @@ class _TelaMusicaState extends State<TelaMusica> {
             }
             // Para o timer se o slider atingir o valor máximo
             if (_currentSliderValue == tempoTotal) {
-              currentSliderValueFormatted = "${tempoTotal}";
+              currentSliderValueFormatted = "$tempoTotal";
               _timer?.cancel();
               skipMusic();
             }
@@ -193,7 +193,7 @@ class _TelaMusicaState extends State<TelaMusica> {
               max: tempoTotal,
               onChanged: (value) {},
               activeColor:
-                  Color.fromARGB(255, 45, 207, 13), // Cor ativa do slider
+                  const Color.fromARGB(255, 45, 207, 13), // Cor ativa do slider
               inactiveColor: Colors.grey, // Cor inativa do slider
             ),
             Padding(
@@ -203,7 +203,7 @@ class _TelaMusicaState extends State<TelaMusica> {
                 children: [
                   Text(
                     currentSliderValueFormatted,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   Text(secondsToMinutes(),
                       style: const TextStyle(color: Colors.white))
@@ -215,7 +215,7 @@ class _TelaMusicaState extends State<TelaMusica> {
               children: [
                 IconButton(
                     onPressed: prevMusic,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.skip_previous,
                       color: Colors.white,
                       size: 50,
@@ -247,7 +247,7 @@ class _TelaMusicaState extends State<TelaMusica> {
                     )),
                 IconButton(
                     onPressed: skipMusic,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.skip_next,
                       color: Colors.white,
                       size: 50,

@@ -206,27 +206,4 @@ class _TelaInicialState extends State<TelaInicial> {
       //
     );
   }
-
-  Widget _homeTopCard() {
-    return Center(
-      child: SizedBox(
-        height: 140,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset('assets/home_top_card.svg'),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 60),
-                child: Image.asset('assets/home_artist.png'),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }

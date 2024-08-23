@@ -35,12 +35,14 @@ class _LoginPageState extends State<LoginPage> {
     if (await isPasswordCorrect(
         _controllerUsuario.text, _controllerSenha.text)) {
       Navigator.push(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(
               builder: (context) => TelaInicial(
                     nameUser: _controllerUsuario.text,
                   )));
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Senha e/ou usuário incorretos!"),
         showCloseIcon: true,

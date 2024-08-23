@@ -22,11 +22,11 @@ Future<int> insertUsuario(Usuario usuario) async {
       conflictAlgorithm: ConflictAlgorithm.replace);
 }
 
-Future<int> insertPlayMusic(int id_playlist, int id_music) async {
+Future<int> insertPlayMusic(int idPlaylist, int idMusic) async {
   Database db = await getDatabase();
   Map<String, dynamic> values = {
-    'playlist_id': id_playlist,
-    'music_id': id_music,
+    'playlist_id': idPlaylist,
+    'music_id': idMusic,
   };
   return db.insert('playlist_music', values,
       conflictAlgorithm: ConflictAlgorithm.replace);

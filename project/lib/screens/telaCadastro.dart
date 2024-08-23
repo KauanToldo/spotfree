@@ -40,12 +40,14 @@ class _TelaCadastroState extends State<TelaCadastro> {
           senha: _controllerSenha.text,
           email: _controllerEmail.text));
       Navigator.push(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(
               builder: (context) => TelaInicial(
                     nameUser: _controllerUsuario.text,
                   )));
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Já existe um usuário com este email cadastrado!"),
         showCloseIcon: true,
