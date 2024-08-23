@@ -22,6 +22,20 @@ class TelaPlaylist extends StatefulWidget {
 }
 
 class _TelaPlaylistState extends State<TelaPlaylist> {
+  List<Map<String, dynamic>>? listMusics;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMusics();
+  }
+
+  Future<void> fetchMusics() async {
+    listMusics = (await getMusicsByPlaylist(widget.idPlaylist))
+        as List<Map<String, dynamic>>?;
+    setState(() {}); // Atualiza o estado para refletir as mudanças na UI
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +72,20 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                   ),
                   IconButton.filled(
                     iconSize: 40,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => TelaMusica(
+                                  idPlaylist: widget.idPlaylist,
+                                  idMusic: listMusics![0]['id'],
+                                  nameMusic: listMusics![0]['nome'],
+                                  autorMusic: listMusics![0]['autor'],
+                                  capaMusic: listMusics![0]['capa'],
+                                  namePlaylist: widget.namePlaylist,
+                                  nomearquivo: listMusics![0]['nomearquivo'],
+                                  tamanho: listMusics![0]['tamanho']))));
+                    },
                     icon: const Icon(Icons.play_arrow),
                     color: Colors.white,
                     style: ButtonStyle(
@@ -101,6 +128,8 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => TelaMusica(
+                                            idMusic: dados[index]['id'],
+                                            idPlaylist: widget.idPlaylist,
                                             nameMusic: dados[index]['nome'],
                                             autorMusic: dados[index]['autor'],
                                             capaMusic: dados[index]['capa'],
@@ -158,7 +187,8 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: const Color.fromARGB(255, 14, 14, 14),
+        color: const Color.fromARGB(255, 18, 18, 18),
+        surfaceTintColor: Colors.transparent,
         child: Center(
           child: GestureDetector(
             onTap: () {

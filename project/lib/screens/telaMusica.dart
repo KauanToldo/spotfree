@@ -4,7 +4,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:project/database/dao/db_query.dart';
 
+// ignore: must_be_immutable
 class TelaMusica extends StatefulWidget {
   final String nameMusic;
   final String autorMusic;
@@ -12,9 +14,13 @@ class TelaMusica extends StatefulWidget {
   final String namePlaylist;
   final String nomearquivo;
   final int tamanho;
+  final int idPlaylist;
+  int idMusic;
 
-  const TelaMusica(
+  TelaMusica(
       {super.key,
+      required this.idMusic,
+      required this.idPlaylist,
       required this.nameMusic,
       required this.autorMusic,
       required this.capaMusic,
@@ -28,22 +34,34 @@ class TelaMusica extends StatefulWidget {
 
 class _TelaMusicaState extends State<TelaMusica> {
   double _currentSliderValue = 0;
+  String currentSliderValueFormatted = "0:00";
   late AudioPlayer audioPlayer;
   IconData buttonPlayPause = Icons.play_arrow;
   late double tempoTotal = double.parse(widget.tamanho.toString());
   Timer? _timer;
   bool isPlaying = false;
+  List<Map<String, dynamic>>? listMusics;
 
   @override
   void initState() {
     super.initState();
     audioPlayer = AudioPlayer();
+    audioPlayer.play(AssetSource('musics/${widget.nomearquivo}'));
+    buttonPlayPause = Icons.pause;
+    _togglePlayPause();
+    fetchMusics();
   }
 
   @override
   void dispose() {
     audioPlayer.dispose();
     super.dispose();
+  }
+
+  Future<void> fetchMusics() async {
+    listMusics = (await getMusicsByPlaylist(widget.idPlaylist))
+        as List<Map<String, dynamic>>?;
+    setState(() {}); // Atualiza o estado para refletir as mudanças na UI
   }
 
   void _togglePlayPause() {
@@ -55,12 +73,17 @@ class _TelaMusicaState extends State<TelaMusica> {
         _timer = Timer.periodic(Duration(seconds: 1), (timer) {
           setState(() {
             // Incrementa o valor do slider
-            _currentSliderValue = (_currentSliderValue < tempoTotal)
-                ? _currentSliderValue + 1
-                : tempoTotal;
+            if (_currentSliderValue < tempoTotal) {
+              _currentSliderValue = _currentSliderValue + 1;
+              formatCurrentTime(_currentSliderValue);
+            } else {
+              _currentSliderValue = tempoTotal;
+            }
             // Para o timer se o slider atingir o valor máximo
             if (_currentSliderValue == tempoTotal) {
+              currentSliderValueFormatted = "${tempoTotal}";
               _timer?.cancel();
+              skipMusic();
             }
           });
         });
@@ -74,7 +97,60 @@ class _TelaMusicaState extends State<TelaMusica> {
   String secondsToMinutes() {
     int minutes = widget.tamanho ~/ 60;
     int seconds = widget.tamanho % 60;
-    return '$minutes:$seconds';
+    return "$minutes:${seconds.toString().padLeft(2, '0')}";
+  }
+
+  void formatCurrentTime(double value) {
+    int totalSeconds = value.toInt();
+
+    // Calcula os minutos e segundos
+    int minutes = totalSeconds ~/ 60;
+    int seconds = totalSeconds % 60;
+
+    currentSliderValueFormatted =
+        "$minutes:${seconds.toString().padLeft(2, '0')}";
+  }
+
+  skipMusic() {
+    if (listMusics!.length == widget.idMusic) {
+      widget.idMusic = 1;
+    } else {
+      widget.idMusic++;
+    }
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TelaMusica(
+              idMusic: widget.idMusic,
+              idPlaylist: widget.idPlaylist,
+              nameMusic: listMusics![widget.idMusic - 1]['nome'],
+              autorMusic: listMusics![widget.idMusic - 1]['autor'],
+              capaMusic: listMusics![widget.idMusic - 1]['capa'],
+              namePlaylist: widget.namePlaylist,
+              nomearquivo: listMusics![widget.idMusic - 1]['nomearquivo'],
+              tamanho: listMusics![widget.idMusic - 1]['tamanho']),
+        ));
+  }
+
+  prevMusic() {
+    if (widget.idMusic == 1) {
+      widget.idMusic = listMusics!.length;
+    } else {
+      widget.idMusic--;
+    }
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TelaMusica(
+              idMusic: widget.idMusic,
+              idPlaylist: widget.idPlaylist,
+              nameMusic: listMusics![widget.idMusic - 1]['nome'],
+              autorMusic: listMusics![widget.idMusic - 1]['autor'],
+              capaMusic: listMusics![widget.idMusic - 1]['capa'],
+              namePlaylist: widget.namePlaylist,
+              nomearquivo: listMusics![widget.idMusic - 1]['nomearquivo'],
+              tamanho: listMusics![widget.idMusic - 1]['tamanho']),
+        ));
   }
 
   @override
@@ -126,7 +202,7 @@ class _TelaMusicaState extends State<TelaMusica> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _currentSliderValue.toString(),
+                    currentSliderValueFormatted,
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(secondsToMinutes(),
@@ -137,8 +213,8 @@ class _TelaMusicaState extends State<TelaMusica> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const IconButton(
-                    onPressed: null,
+                IconButton(
+                    onPressed: prevMusic,
                     icon: Icon(
                       Icons.skip_previous,
                       color: Colors.white,
@@ -169,8 +245,8 @@ class _TelaMusicaState extends State<TelaMusica> {
                       color: Colors.black,
                       size: 50,
                     )),
-                const IconButton(
-                    onPressed: null,
+                IconButton(
+                    onPressed: skipMusic,
                     icon: Icon(
                       Icons.skip_next,
                       color: Colors.white,
