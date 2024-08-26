@@ -8,7 +8,7 @@
 
 Aqui estão algumas capturas de tela do Spotfree em ação:
 
-![SplashPage](caminho/para/tela_principal.png)
+![SplashPage](screenshots/splashpage.png)
 *SplashPage*
 
 ![Tela de Login](caminho/para/tela_principal.png)
