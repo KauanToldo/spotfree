@@ -1,4 +1,4 @@
-# Spotfree 🎵
+# ![Logo do Spotfree](project/assets/logo_splash.png)Spotfree 🎵
 
 **Spotfree** é um aplicativo de música offline desenvolvido em Flutter, inspirado no Spotify. O projeto tem como objetivo proporcionar uma experiência de música fluida e prática, mesmo sem conexão com a internet. Utilizando o banco de dados SQLite, o app fornece um player de músicas com playlists variadas.
 
