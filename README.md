@@ -8,22 +8,22 @@
 
 Aqui estão algumas capturas de tela do Spotfree em ação:
 
-![SplashPage](screenshots/splashpage.png)
+![SplashPage](screenshots/splashpage)
 *SplashPage*
 
-![Tela de Login](caminho/para/tela_principal.png)
+![Tela de Login](screenshots/loginpage)
 *Tela de Login*
 
-![Tela Inicial](caminho/para/tela_principal.png)
+![Tela Inicial](screenshots/homepage)
 *Tela Inicial*
 
-![Tela de Playlist](caminho/para/tela_playlists.png)
+![Tela de Playlist](screenshots/playlistpage)
 *Tela de Playlist*
 
-![Tela do player de música](caminho/para/tela_reproducao.png)
+![Tela do player de música](screenshots/playerpage)
 *Tela do player de música*
 
-![Tela de Perfil](caminho/para/tela_reproducao.png)
+![Tela de Perfil](screenshots/perfilpage)
 *Tela de Perfil*
 
 ## 🚀 Funcionalidades
