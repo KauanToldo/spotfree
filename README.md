@@ -4,6 +4,28 @@
 
 **Spotfree** é um aplicativo de música offline desenvolvido em Flutter, inspirado no Spotify. O projeto tem como objetivo proporcionar uma experiência de música fluida e prática, mesmo sem conexão com a internet. Utilizando o banco de dados SQLite, o app fornece um player de músicas com playlists variadas.
 
+## 🖼️ Screenshots
+
+Aqui estão algumas capturas de tela do Spotfree em ação:
+
+![SplashPage](caminho/para/tela_principal.png)
+*SplashPage*
+
+![Tela de Login](caminho/para/tela_principal.png)
+*Tela de Login*
+
+![Tela Inicial](caminho/para/tela_principal.png)
+*Tela Inicial*
+
+![Tela de Playlist](caminho/para/tela_playlists.png)
+*Tela de Playlist*
+
+![Tela do player de música](caminho/para/tela_reproducao.png)
+*Tela do player de música*
+
+![Tela de Perfil](caminho/para/tela_reproducao.png)
+*Tela de Perfil*
+
 ## 🚀 Funcionalidades
 
 - **Player de Música Offline**: Reproduza suas músicas favoritas sem a necessidade de conexão com a internet.
