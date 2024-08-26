@@ -10,11 +10,9 @@ Aqui estão algumas capturas de tela do Spotfree em ação:
 
 <div align="center">
     <img src="screenshots/splashpage" alt="splashpage" width="200" style="margin: 5px"/>
-    <img src="screenshots/loginpage" alt="loginpage" width="200" style="margin: 5px"/>
     <img src="screenshots/homepage" alt="homepage" width="200" style="margin: 5px"/>
     <img src="screenshots/playlistpage" alt="playlistpage" width="200" style="margin: 5px"/>
     <img src="screenshots/playerpage" alt="playerpage" width="200" style="margin: 5px"/>
-    <img src="screenshots/perfilpage" alt="perfilpage" width="200" style="margin: 5px"/>
 </div>
 
 ## 🚀 Funcionalidades
