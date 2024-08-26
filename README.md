@@ -1,4 +1,4 @@
-# <div style="text-align: center;"><img src="project/assets/logo_splash.png" alt="Logo do Spotfree" width="300"/></div>
+# <div style="display:flex; align-items:center;"><img src="project/assets/logo_splash.png" alt="Logo do Spotfree" width="300"/></div>
 
 # Spotfree 🎵
 
