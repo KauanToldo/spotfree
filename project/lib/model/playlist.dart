@@ -1,9 +1,7 @@
-import 'dart:typed_data';
-
 class Playlist {
   final int? id;
   final String nome;
-  final Uint8List capa;
+  final String capa;
 
   Playlist({this.id, required this.nome, required this.capa});
 

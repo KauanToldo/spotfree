@@ -1,14 +1,12 @@
 // ignore_for_file: file_names
 
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:project/database/dao/db_query.dart';
 import 'package:project/screens/telaMusica.dart';
 
 class TelaPlaylist extends StatefulWidget {
   final String namePlaylist;
-  final Uint8List capaPlaylist;
+  final String capaPlaylist;
   final int idPlaylist;
 
   const TelaPlaylist(
@@ -51,8 +49,8 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
         child: Center(
           child: Column(
             children: [
-              Image.memory(
-                widget.capaPlaylist,
+              Image.asset(
+                "assets/capas/${widget.capaPlaylist}",
                 width: 250,
                 height: 250,
                 fit: BoxFit.cover,
@@ -120,8 +118,6 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                         return ListView.builder(
                           itemCount: dados.length,
                           itemBuilder: (context, index) {
-                            Uint8List? capaBytes =
-                                dados[index]['capa'] as Uint8List?;
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -144,8 +140,8 @@ class _TelaPlaylistState extends State<TelaPlaylist> {
                                     const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
                                 child: Row(
                                   children: [
-                                    Image.memory(
-                                      capaBytes!,
+                                    Image.asset(
+                                      "assets/capas/${dados[index]['capa']}",
                                       width: 60,
                                       height: 60,
                                       fit: BoxFit.cover,

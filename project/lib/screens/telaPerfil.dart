@@ -1,12 +1,16 @@
 // ignore_for_file: file_names, unnecessary_import
 
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project/database/dao/db_query.dart';
+import 'package:project/database/db.dart';
 import 'package:project/screens/telaPlaylist.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // import 'package:project/model/music.dart';
 // import 'package:project/model/playlist.dart';
 
@@ -20,6 +24,44 @@ class TelaPerfil extends StatefulWidget {
 }
 
 class _TelaPerfilState extends State<TelaPerfil> {
+  final imagePicker = ImagePicker();
+  Uint8List? imageBytes;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserImage();
+  }
+
+  Future<void> loadUserImage() async {
+    Database db = await getDatabase();
+    List<Map<String, dynamic>> result = await db.query(
+      'usuarios',
+      where: 'nome = ?',
+      whereArgs: [widget.nameUser],
+    );
+
+    if (result.isNotEmpty && result[0]['foto'] != null) {
+      setState(() {
+        imageBytes = result[0]['foto'];
+      });
+    }
+  }
+
+  pick(ImageSource source) async {
+    final pickedFile = await imagePicker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      Uint8List imageFileByte = await File(pickedFile.path).readAsBytes();
+
+      await updateFotoUsuario(widget.nameUser, imageFileByte);
+
+      setState(() {
+        imageBytes = imageFileByte;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +73,16 @@ class _TelaPerfilState extends State<TelaPerfil> {
           children: [
             Row(
               children: [
-                Image.asset(
-                  "assets/usuario.png",
-                  scale: 5,
+                GestureDetector(
+                  onTap: () {
+                    pick(ImageSource.gallery);
+                  },
+                  child: CircleAvatar(
+                    radius: 65,
+                    backgroundColor: Colors.grey[300],
+                    backgroundImage:
+                        imageBytes != null ? MemoryImage(imageBytes!) : null,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
@@ -51,7 +100,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
             Text(
               'Playlists de ${widget.nameUser}',
               style: const TextStyle(
-                  color: Color.fromARGB(255, 30, 215, 16),
+                  color: Color.fromARGB(255, 66, 200, 60),
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
             ),
@@ -79,8 +128,6 @@ class _TelaPerfilState extends State<TelaPerfil> {
                       return ListView.builder(
                         itemCount: dados.length,
                         itemBuilder: (context, index) {
-                          Uint8List? capaBytes =
-                              dados[index]['capa'] as Uint8List?;
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -101,8 +148,8 @@ class _TelaPerfilState extends State<TelaPerfil> {
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   children: [
-                                    Image.memory(
-                                      capaBytes!,
+                                    Image.asset(
+                                      "assets/capas/${dados[index]['capa']}",
                                       width: 75,
                                       height: 75,
                                       fit: BoxFit.cover,

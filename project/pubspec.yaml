@@ -18,9 +18,8 @@ dependencies:
   sqflite:
   sqflite_common_ffi: ^2.2.5
   audioplayers: ^1.0.1
-  flutter_local_notifications: ^17.2.2
-  flutter_timezone: ^1.0.8
-  rxdart: ^0.28.0
+  image_picker: ^0.8.5+2
+
 
 dev_dependencies:
   flutter_test:
@@ -34,5 +33,6 @@ flutter:
   assets:
    - assets/
    - assets/musics/
+   - assets/capas/
   # fonts:
   

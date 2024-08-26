@@ -2,7 +2,6 @@
 // ignore: depend_on_referenced_packages
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:project/database/dao/db_query.dart';
 
@@ -10,7 +9,7 @@ import 'package:project/database/dao/db_query.dart';
 class TelaMusica extends StatefulWidget {
   final String nameMusic;
   final String autorMusic;
-  final Uint8List capaMusic;
+  final String capaMusic;
   final String namePlaylist;
   final String nomearquivo;
   final int tamanho;
@@ -112,45 +111,59 @@ class _TelaMusicaState extends State<TelaMusica> {
   }
 
   skipMusic() {
-    if (listMusics!.length == widget.idMusic) {
-      widget.idMusic = 1;
+    Map<int, int> idToIndex = {
+      for (int i = 0; i < listMusics!.length; i++) listMusics![i]['id']: i
+    };
+    int currentIndex = idToIndex[widget.idMusic]!;
+    int lastId = listMusics?.last['id'];
+    int firstId = listMusics?.first['id'];
+    if (widget.idMusic == lastId) {
+      widget.idMusic = firstId;
     } else {
-      widget.idMusic++;
+      widget.idMusic = listMusics![currentIndex + 1]['id'];
     }
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => TelaMusica(
-              idMusic: widget.idMusic,
-              idPlaylist: widget.idPlaylist,
-              nameMusic: listMusics![widget.idMusic - 1]['nome'],
-              autorMusic: listMusics![widget.idMusic - 1]['autor'],
-              capaMusic: listMusics![widget.idMusic - 1]['capa'],
-              namePlaylist: widget.namePlaylist,
-              nomearquivo: listMusics![widget.idMusic - 1]['nomearquivo'],
-              tamanho: listMusics![widget.idMusic - 1]['tamanho']),
-        ));
+            builder: (context) => TelaMusica(
+                  idMusic: widget.idMusic,
+                  idPlaylist: widget.idPlaylist,
+                  nameMusic: listMusics![idToIndex[widget.idMusic]!]['nome'],
+                  autorMusic: listMusics![idToIndex[widget.idMusic]!]['autor'],
+                  capaMusic: listMusics![idToIndex[widget.idMusic]!]['capa'],
+                  namePlaylist: widget.namePlaylist,
+                  nomearquivo: listMusics![idToIndex[widget.idMusic]!]
+                      ['nomearquivo'],
+                  tamanho: listMusics![idToIndex[widget.idMusic]!]['tamanho'],
+                )));
   }
 
   prevMusic() {
-    if (widget.idMusic == 1) {
-      widget.idMusic = listMusics!.length;
+    Map<int, int> idToIndex = {
+      for (int i = 0; i < listMusics!.length; i++) listMusics![i]['id']: i
+    };
+    int lastId = listMusics?.last['id'];
+    int firstId = listMusics?.first['id'];
+    int currentIndex = idToIndex[widget.idMusic]!;
+    if (widget.idMusic == firstId) {
+      widget.idMusic = lastId;
     } else {
-      widget.idMusic--;
+      widget.idMusic = listMusics![currentIndex - 1]['id'];
     }
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => TelaMusica(
-              idMusic: widget.idMusic,
-              idPlaylist: widget.idPlaylist,
-              nameMusic: listMusics![widget.idMusic - 1]['nome'],
-              autorMusic: listMusics![widget.idMusic - 1]['autor'],
-              capaMusic: listMusics![widget.idMusic - 1]['capa'],
-              namePlaylist: widget.namePlaylist,
-              nomearquivo: listMusics![widget.idMusic - 1]['nomearquivo'],
-              tamanho: listMusics![widget.idMusic - 1]['tamanho']),
-        ));
+            builder: (context) => TelaMusica(
+                  idMusic: widget.idMusic,
+                  idPlaylist: widget.idPlaylist,
+                  nameMusic: listMusics![idToIndex[widget.idMusic]!]['nome'],
+                  autorMusic: listMusics![idToIndex[widget.idMusic]!]['autor'],
+                  capaMusic: listMusics![idToIndex[widget.idMusic]!]['capa'],
+                  namePlaylist: widget.namePlaylist,
+                  nomearquivo: listMusics![idToIndex[widget.idMusic]!]
+                      ['nomearquivo'],
+                  tamanho: listMusics![idToIndex[widget.idMusic]!]['tamanho'],
+                )));
   }
 
   @override
@@ -170,8 +183,8 @@ class _TelaMusicaState extends State<TelaMusica> {
               style: const TextStyle(color: Colors.white, fontSize: 24),
             ),
             const SizedBox(height: 40.0),
-            Image.memory(
-              widget.capaMusic,
+            Image.asset(
+              "assets/capas/${widget.capaMusic}",
               width: 350,
               height: 350,
               fit: BoxFit.cover,

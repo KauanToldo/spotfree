@@ -32,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: Image.asset(
           'assets/logo_splash.png',
-          scale: 0.8,
+          scale: 5,
         ),
       ),
     );

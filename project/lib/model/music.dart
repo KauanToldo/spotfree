@@ -1,10 +1,8 @@
-import 'dart:typed_data';
-
 class Music {
   final int? id;
   final String nome;
   final String autor;
-  final Uint8List capa;
+  final String capa;
   final String nomearquivo;
   final int tamanho;
 

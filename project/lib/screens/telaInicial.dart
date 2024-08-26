@@ -4,10 +4,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:project/database/dao/db_query.dart';
+import 'package:project/database/db.dart';
 // import 'package:project/model/music.dart';
 // import 'package:project/model/playlist.dart';
 import 'package:project/screens/telaPerfil.dart';
 import 'package:project/screens/telaPlaylist.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class TelaInicial extends StatefulWidget {
   final String nameUser;
@@ -19,6 +21,29 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
+  Uint8List? imageBytes;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserImage();
+  }
+
+  Future<void> loadUserImage() async {
+    Database db = await getDatabase();
+    List<Map<String, dynamic>> result = await db.query(
+      'usuarios',
+      where: 'nome = ?',
+      whereArgs: [widget.nameUser],
+    );
+
+    if (result.isNotEmpty && result[0]['foto'] != null) {
+      setState(() {
+        imageBytes = result[0]['foto'];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +65,12 @@ class _TelaInicialState extends State<TelaInicial> {
                   },
                   child: Row(
                     children: [
-                      Image.asset(
-                        "assets/usuario.png",
-                        scale: 8,
+                      CircleAvatar(
+                        radius: 35,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage: imageBytes != null
+                            ? MemoryImage(imageBytes!)
+                            : null,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
@@ -87,6 +115,14 @@ class _TelaInicialState extends State<TelaInicial> {
             ),
           )),
       appBar: AppBar(
+        centerTitle: true,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Image.asset(
+            "assets/logo_splash.png",
+            scale: 9,
+          ),
+        ),
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
@@ -97,10 +133,30 @@ class _TelaInicialState extends State<TelaInicial> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: SizedBox(
+                height: 140,
+                child: Stack(
+                  children: [
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image.asset('assets/home_top_card.png')),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 60),
+                        child: Image.asset("assets/home_artist.png"),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             const Text(
               "Suas Playlists",
               style: TextStyle(
-                  color: Color.fromARGB(255, 30, 215, 16),
+                  color: Color.fromARGB(255, 66, 200, 60),
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
             ),
@@ -127,10 +183,10 @@ class _TelaInicialState extends State<TelaInicial> {
                     case ConnectionState.done:
                       List<Map> dados = snapshot.data as List<Map>;
                       return ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
                         itemCount: dados.length,
                         itemBuilder: (context, index) {
-                          Uint8List? capaBytes =
-                              dados[index]['capa'] as Uint8List?;
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 16.0),
                             child: GestureDetector(
@@ -147,28 +203,31 @@ class _TelaInicialState extends State<TelaInicial> {
                                             ))));
                               },
                               child: Container(
+                                height: 200,
                                 decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 46, 42, 42),
                                     borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  children: [
-                                    Image.memory(
-                                      capaBytes!,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        dados[index]['nome'],
-                                        style: const TextStyle(
-                                            color: Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 12.0),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        "assets/capas/${dados[index]['capa']}",
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        dados[index]['nome'],
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
